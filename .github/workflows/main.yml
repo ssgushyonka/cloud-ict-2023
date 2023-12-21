@@ -23,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: lilbeb/clud-ict-2023:latest
+          tags: oblcc564/lilbeb:latest

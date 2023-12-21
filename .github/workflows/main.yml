@@ -1,21 +1,19 @@
- name: Build image
+name: Docker image to docker hub
 
-on:
+on: 
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - 'main'
 
-  jobs:
-    build:
-        runs-on: alpine-latest
+jobs:
+  build:
+      runs-on: alpine-latest
 
-        steps:
-        - uses: actions/checkout@v3 
-        - name: Log in Docker Hub
-          run: docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
-        - name: Build the Docker image
-          run: docker build . --file Dockerfile --tag lilbeb/cloud-ict-2023
-        - name: Docker Push
-          run: docker push lilbeb/cloud-ict-2023
+      steps:
+      - uses: actions/checkout@v3 
+      - name: Log in Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag lilbeb/cloud-ict-2023
+      - name: Docker Push
+        run: docker push lilbeb/cloud-ict-2023

@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker
-        uses: docker/setup-docker@v2
+        uses: docker/setup-docker@v1
 
       - name: Build Docker image
         run: |
-          docker build -t laba3:latest .
+          docker build -t lilbeb:latest .
           docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
-          docker push laba3:latest
+          docker push lilbeb:latest
 
       - name: Save results
         run: echo "Hello, Docker!" > result.txt

@@ -1,5 +1,3 @@
 FROM alpine:latest
 
-RUN echo "oblachnie zlidni" > /sometext.txt
-
-CMD [ "hello", "/sometext.txt" ]
+RUN echo "Hello, Docker!" > result.txt

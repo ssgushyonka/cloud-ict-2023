@@ -15,6 +15,6 @@
         - name: Log in Docker Hub
             run: docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
         - name: Build the Docker image
-            run: docker build . --file good.Dockerfile --tag lilbeb/cloud-ict-2023
+            run: docker build . --file Dockerfile --tag lilbeb/cloud-ict-2023
         - name: Docker Push
             run: docker push lilbeb/cloud-ict-2023

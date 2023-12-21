@@ -1,40 +1,26 @@
-name: Build Docker Image and Save Results
+name: Docker image to docker hub
 
-on:
+on: 
   push:
     branches:
-      - main
-
+      - 'main'
 jobs:
-  build:
+  push_to_docker_hub:
+    name: Push image to Docker hub
     runs-on: ubuntu-latest
-
     steps:
-      - name: Set up Docker
-        run: |
-            sudo apt-get update
-            sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install docker-ce docker-ce-cli containerd.io
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Docker
-        uses: docker/setup-docker@v1
-
-      - name: Build Docker image
-        run: |
-          docker build -t lilbeb:latest .
-          docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
-          docker push lilbeb:latest
-
-      - name: Save results
-        run: echo "Hello, Docker!" > result.txt
-
-      - name: Save results to artifacts
-        uses: actions/upload-artifact@v2
+      - name: checkout out the repo 
+        uses: actions/checkout@v4
+      
+      - name: log in to docker hub 
+        uses: docker/login-action@v3
         with:
-          name: build-results
-          path: result.txt
+          username: ${{ secrets.DOCKER_HUB_LOGIN }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: build image and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: lilbeb/clud-ict-2023:latest
